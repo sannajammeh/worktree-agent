@@ -1,16 +1,19 @@
-# worktree
+# worktree-cli
 
 Interactive CLI for managing git worktrees. Creates worktrees at `~/worktrees/<repo>/<branch>`.
 
-## Install
+## Usage
 
 ```bash
-bun install
-bun run build
-# moves ./worktree to your PATH
-```
+# npx
+npx worktree-cli
 
-## Usage
+# pnpm
+pnpm dlx worktree-cli
+
+# bun
+bunx worktree-cli
+```
 
 ### Create worktree
 
@@ -34,9 +37,16 @@ worktree clean
 worktree clean <branch-name>
 ```
 
+## Install globally (optional)
+
+```bash
+npm i -g worktree-cli
+```
+
 ## Dev
 
 ```bash
+bun install
 bun run init.ts        # run directly
-bun run build          # compile to ./worktree
+bun run build          # compile to standalone ./worktree binary
 ```

@@ -1,9 +1,29 @@
 {
-  "name": "worktree-agent",
-  "private": true,
-  "scripts": {
-    "build": "bun build --compile init.ts --outfile worktree"
+  "name": "worktree-cli",
+  "version": "1.0.0",
+  "description": "Interactive CLI for managing git worktrees",
+  "type": "module",
+  "bin": {
+    "worktree": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun build init.ts --target node --outfile dist/index.js",
+    "build:bin": "bun build --compile init.ts --outfile worktree",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "git",
+    "worktree",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sannajammeh/worktree-agent"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@types/bun": "latest"
   },

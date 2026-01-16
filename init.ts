@@ -1,23 +1,27 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 
 import { select, input, confirm, checkbox } from "@inquirer/prompts";
 import chalk from "chalk";
 import { homedir } from "os";
 import { join } from "path";
 import { existsSync } from "fs";
+import { spawn } from "child_process";
 
 async function execGit(args: string[]): Promise<string> {
-  const proc = Bun.spawn(["git", ...args], {
-    stdout: "pipe",
-    stderr: "pipe",
+  return new Promise((resolve, reject) => {
+    const proc = spawn("git", args, { stdio: ["ignore", "pipe", "pipe"] });
+    let stdout = "";
+    let stderr = "";
+    proc.stdout.on("data", (data) => (stdout += data));
+    proc.stderr.on("data", (data) => (stderr += data));
+    proc.on("close", (code) => {
+      if (code !== 0) {
+        reject(new Error(stderr || `Git command failed with exit code ${code}`));
+      } else {
+        resolve(stdout.trim());
+      }
+    });
   });
-  const output = await new Response(proc.stdout).text();
-  const exitCode = await proc.exited;
-  if (exitCode !== 0) {
-    const error = await new Response(proc.stderr).text();
-    throw new Error(error || `Git command failed with exit code ${exitCode}`);
-  }
-  return output.trim();
 }
 
 async function isGitRepo(): Promise<boolean> {
