@@ -1,15 +1,42 @@
-# worktree-agent
+# worktree
 
-To install dependencies:
+Interactive CLI for managing git worktrees. Creates worktrees at `~/worktrees/<repo>/<branch>`.
+
+## Install
 
 ```bash
 bun install
+bun run build
+# moves ./worktree to your PATH
 ```
 
-To run:
+## Usage
+
+### Create worktree
 
 ```bash
-bun run 
+worktree
 ```
 
-This project was created using `bun init` in bun v1.3.3. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+Prompts for:
+1. Base branch (fetches from origin first)
+2. New branch name
+
+Creates worktree at `~/worktrees/<repo>/<branch>`.
+
+### Clean worktrees
+
+```bash
+# interactive selection
+worktree clean
+
+# remove specific branch
+worktree clean <branch-name>
+```
+
+## Dev
+
+```bash
+bun run init.ts        # run directly
+bun run build          # compile to ./worktree
+```
